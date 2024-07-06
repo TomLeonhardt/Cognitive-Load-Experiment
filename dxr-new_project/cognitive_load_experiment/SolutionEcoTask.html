@@ -1,0 +1,44 @@
+{{ extends 'global/Page.html' }}
+{{ block title }}Task 2{{ endblock }}
+
+{{ block content }}
+
+<h1>Results</h1>
+
+<p id="result-message"></p>
+
+<p>You selected: {{ player.answer }}</p>
+<p>Correct answer: A</p>
+
+<p><strong> Here is the solution to the task:</strong></p>
+
+<p><u>Determining the Nash Equilibrium:</u></p>
+
+<p> Company A invests in advertising, Company B does not: (10, 1)</p>
+<p> Company A does not invest in advertising, Company B invests: (1, 10)</p>
+<p> If both companies choose the best response to the other company's decision, both will invest in advertising because it is their individually best response, regardless of the other company's decision.</p>
+
+<p>Therefore, the Nash equilibrium is: <span style="color: green;">Both companies invest in advertising: (4, 4)</span>.</p>
+
+<p><u>Strategy Decision:</u></p>
+
+<p> As the manager of Company A, you would choose to invest in advertising because it is the best response to the possible decision of Company B and leads to the Nash equilibrium.</p>
+
+{{ next_button }}
+
+{{ endblock }}
+
+{{ block scripts }}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+        const userAnswer = "{{ player.answer }}".toLowerCase();
+        const correctAnswer = 'a';
+
+        if (userAnswer === correctAnswer) {
+            document.getElementById('result-message').innerHTML = '<p><strong><span style="color: green; font-size: 1.5em;">Correct!</span></strong></p>';
+        } else {
+            document.getElementById('result-message').innerHTML = '<p><strong><span style="color: red; font-size: 1.5em;">Incorrect.</span></strong></p>';
+        }
+    });
+</script>
+{{ endblock }}

@@ -1,0 +1,90 @@
+{{ extends 'global/Page.html' }}
+{{ block title }}Task 2{{ endblock }}
+
+{{ block content }}
+
+    <style>
+        .solution {
+            display: none;
+            margin-top: 10px;
+        }
+        .button-container {
+            margin-top: 10px;
+        }
+    </style>
+
+    <h2>Prisoner's Dilemma</h2>
+    <p>Imagine two competing companies, Company A and Company B, are considering whether or not to invest in advertising.</p>
+    <p>Both companies know that the decision of the other company will affect their own profits.</p>
+    <h3>Here are the details:</h3>
+    <p>If both companies invest in advertising, each company earns a profit of 4 million euros.</p>
+    <p>If Company A invests in advertising and Company B does not, Company A earns a profit of 10 million euros and Company B earns a profit of 1 million euros.</p>
+    <p>If Company B invests in advertising and Company A does not, Company B earns a profit of 10 million euros and Company A earns a profit of 1 million euros.</p>
+    <p>If neither company invests in advertising, each company earns a profit of 6 million euros.</p>
+    <p>The companies must simultaneously decide whether to invest in advertising or not. Their decisions are summarized in the following payoff matrix:</p>
+    <table border="1" cellpadding="8" cellspacing="0">
+        <tr>
+            <th></th>
+            <th>Company B: Invest</th>
+            <th>Company B: Do not invest</th>
+        </tr>
+        <tr>
+            <th>Company A: Invest</th>
+            <td>(4, 4)</td>
+            <td>(10, 1)</td>
+        </tr>
+        <tr>
+            <th>Company A: Do not invest</th>
+            <td>(1, 10)</td>
+            <td>(6, 6)</td>
+        </tr>
+    </table>
+    <br>
+    <p style="font-size: 1.2em; font-weight: bold; text-decoration: underline;">Task: Analyze the payoff matrix and determine the Nash equilibrium for this game.</p>
+    <p style="font-size: 1.2em; font-weight: bold; text-decoration: underline;">Based on your analysis, which strategy would you choose as the manager of Company A?</p>
+    <br>
+    <p><strong>You have the option to solve this task yourself or to delegate it to an artificial intelligence (AI) that will solve the task for you.</strong></p>
+    <p><strong>Make your decision and solve the task accordingly.</strong></p>
+    <p>Please select one of the following options:</p>
+    <ul>
+        <li>A: (4, 4) - Both companies invest in advertising.</li>
+        <li>B: (10, 1) - Company A invests, Company B does not invest.</li>
+        <li>C: (1, 10) - Company A does not invest, Company B invests.</li>
+        <li>D: (6, 6) - Both companies do not invest in advertising.</li>
+    </ul>
+    <p>Enter your answer (A, B, C, or D):</p>
+    {{ formfield player.answer }}
+    <div class="button-container">
+        <button type="button" onclick="showSolution()">View AI Solution</button>
+    </div>
+    <div id="ai-solution" class="solution">
+        <p>The correct answer is: A</p>
+    </div>
+    <br>
+    {{ next_button }}
+
+   
+
+
+
+{{ endblock }}
+
+{{ block scripts }}
+<script>
+        let aiUsageCount = 0;
+
+        function showSolution() {
+            document.getElementById('ai-solution').style.display = 'block';
+            aiUsageCount++;
+            console.log('AI solution used ' + aiUsageCount + ' times');
+            sessionStorage.setItem('ai_used_round2', aiUsageCount);
+        }
+
+        function saveAIUsage() {
+            localStorage.setItem('aiUsageCount', aiUsageCount);
+        }
+
+        document.querySelector('form').addEventListener('submit', saveAIUsage);
+    
+</script>
+{{ endblock }}

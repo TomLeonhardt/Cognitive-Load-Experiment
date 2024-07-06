@@ -1,0 +1,134 @@
+{{ extends 'global/Page.html' }}
+{{ block title }}Overall Results{{ endblock }}
+
+{{ block content }}
+
+<h2>Round 1</h2>
+<p style="font-weight: bold; font-size: 1.2em;"><span style="text-decoration: underline;">Task Score:</span> <span id="round1-score"></span></p>
+<p>Sequence of Numbers: <span id="sequence1-result"></span></p>
+<p>Use of AI: <span id="ai1-result"></span></p>
+
+<h2>Round 2</h2>
+<p style="font-weight: bold; font-size: 1.2em;"><span style="text-decoration: underline;">Task Score:</span> <span id="round2-score"></span></p>
+<p>Sequence of Numbers: <span id="sequence2-result"></span></p>
+<p>Use of AI: <span id="ai2-result"></span></p>
+
+<h2>Round 3</h2>
+<p style="font-weight: bold; font-size: 1.2em;"><span style="text-decoration: underline;">Task Score:</span> <span id="round3-score"></span></p>
+<p>Sequence of Numbers: <span id="sequence3-result"></span></p>
+<p>Use of AI: <span id="ai3-result"></span></p>
+
+<h2>Overall</h2>
+<p style="font-weight: bold; font-size: 1.2em;"><span style="text-decoration: underline;">Total Task Score:</span> <span id="total-task-score"></span></p>
+<p style="font-weight: bold; font-size: 1.2em;"><span style="text-decoration: underline;">Total Correct Sequences:</span> <span id="total-sequence-correct"></span></p>
+<p style="font-weight: bold; font-size: 1.2em;"><span style="text-decoration: underline;">Total AI Usage:</span> <span id="total-ai-usage"></span></p>
+
+{{ next_button }}
+
+
+
+{{ endblock }}
+
+{{ block scripts }}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Round 1
+    const answer1 = '{{ player.text_answer1 }}' === 'True';
+    const answer2 = '{{ player.text_answer2 }}' === 'False';
+    const answer3 = '{{ player.text_answer3 }}' === 'True';
+
+    let round1Score = 0;
+    if (answer1) round1Score += 1;
+    if (answer2) round1Score += 1;
+    if (answer3) round1Score += 1;
+
+    document.getElementById('round1-score').innerHTML = round1Score + '/3';
+
+    const sequence1Correct = '{{ player.sequence1 }}' === '{{ player.recall_numbers1 }}';
+    document.getElementById('sequence1-result').innerHTML = sequence1Correct ? '<span style="color: green;">Correct</span>' : '<span style="color: red;">Incorrect</span>';
+
+    // Check if AI was used in Round 1
+    const aiUsed1 = sessionStorage.getItem('ai_used_round1') > 0;
+    document.getElementById('ai1-result').innerHTML = aiUsed1 ? 'Yes' : 'No';
+
+    // Round 2
+    const userAnswer = "{{ player.answer }}".toLowerCase();
+    const correctAnswer = 'a';
+    const round2Score = userAnswer === correctAnswer ? 1 : 0;
+
+    document.getElementById('round2-score').innerHTML = round2Score + '/1';
+
+    const sequence2Correct = '{{ player.sequence2 }}' === '{{ player.recall_numbers2 }}';
+    document.getElementById('sequence2-result').innerHTML = sequence2Correct ? '<span style="color: green;">Correct</span>' : '<span style="color: red;">Incorrect</span>';
+
+    // Check if AI was used in Round 2
+    const aiUsed2 = sessionStorage.getItem('ai_used_round2') > 0;
+    document.getElementById('ai2-result').innerHTML = aiUsed2 ? 'Yes' : 'No';
+
+    // Round 3
+    const correctAnswers = {
+        math1: 300,
+        math2: 3000,
+        math3: 500,
+        math4: 1000,
+        math5: 1500
+    };
+
+    const playerAnswers = {
+        math1: parseInt('{{ player.math1 }}', 10),
+        math2: parseInt('{{ player.math2 }}', 10),
+        math3: parseInt('{{ player.math3 }}', 10),
+        math4: parseInt('{{ player.math4 }}', 10),
+        math5: parseInt('{{ player.math5 }}', 10)
+    };
+
+    let round3Score = 0;
+
+    for (let i = 1; i <= 5; i++) {
+        let answerId = `math${i}`;
+        let correctAnswer = correctAnswers[answerId];
+        let playerAnswer = playerAnswers[answerId];
+
+        if (playerAnswer === correctAnswer) {
+            round3Score += 1;
+        }
+    }
+
+    document.getElementById('round3-score').innerHTML = round3Score + '/5';
+
+    const sequence3Correct = '{{ player.sequence3 }}' === '{{ player.recall_numbers3 }}';
+    document.getElementById('sequence3-result').innerHTML = sequence3Correct ? '<span style="color: green;">Correct</span>' : '<span style="color: red;">Incorrect</span>';
+
+    // Check if AI was used in Round 3
+    const aiUsed3 = sessionStorage.getItem('ai_used_round3') > 0;
+    document.getElementById('ai3-result').innerHTML = aiUsed3 ? 'Yes' : 'No';
+
+    // Overall
+    const totalTaskScore = round1Score + round2Score + round3Score;
+    document.getElementById('total-task-score').innerHTML = totalTaskScore + '/9';
+
+    const totalSequenceCorrect = (sequence1Correct ? 1 : 0) + (sequence2Correct ? 1 : 0) + (sequence3Correct ? 1 : 0);
+    document.getElementById('total-sequence-correct').innerHTML = totalSequenceCorrect + '/3';
+
+    // Calculate total AI usage
+    const totalAIUsage = (aiUsed1 ? 1 : 0) + (aiUsed2 ? 1 : 0) + (aiUsed3 ? 1 : 0);
+    let aiUsageText = '';
+    switch (totalAIUsage) {
+        case 1:
+            aiUsageText = 'On one task';
+            break;
+        case 2:
+            aiUsageText = 'On two tasks';
+            break;
+        case 3:
+            aiUsageText = 'On three tasks';
+            break;
+        default:
+            aiUsageText = 'None';
+            break;
+    }
+    document.getElementById('total-ai-usage').innerHTML = aiUsageText;
+});
+
+</script>
+{{ endblock }}

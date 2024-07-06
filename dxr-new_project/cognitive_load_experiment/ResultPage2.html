@@ -1,0 +1,36 @@
+{{ extends 'global/Page.html' }}
+{{ block title }}Sequence of Numbers 2{{ endblock }}
+
+{{ block content }}
+
+<h1>Results</h1>
+
+<p>The generated sequence was: <strong id="generated-sequence"></strong></p>
+<p>You recalled: <strong id="recalled-sequence"></strong></p>
+<p id="result"></p>
+
+{{ next_button }}
+
+
+{{ endblock }}
+
+{{ block scripts }}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const generatedSequence = "{{ player.sequence2 }}";
+    const recalledSequence = "{{ player.recall_numbers2 }}";
+    
+    // Anzeigen der Sequenzen
+    document.getElementById('generated-sequence').textContent = generatedSequence;
+    document.getElementById('recalled-sequence').textContent = recalledSequence;
+
+    // Abgleich Sequenzen
+    if (generatedSequence === recalledSequence) {
+        document.getElementById('result').innerHTML = '<span style="color: green; font-size: 1.5em;">Correct!</span>';
+    } else {
+        document.getElementById('result').innerHTML = '<span style="color: red; font-size: 1.5em;">Incorrect.</span>';
+    }
+});
+
+</script>
+{{ endblock }}

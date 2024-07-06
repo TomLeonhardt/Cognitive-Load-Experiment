@@ -1,0 +1,82 @@
+{{ extends 'global/Page.html' }}
+{{ block title }}Task 1{{ endblock }}
+
+{{ block content }}
+
+    <style>
+        .solution {
+            display: none;
+            margin-top: 10px;
+        }
+        .button-container {
+            margin-top: 10px;
+        }
+    </style>
+
+    <h2>Introduction to Industrial Economics</h2>
+    <br>
+    <h3>Statement 1:</h3>
+    <form method="post">
+        <label for="question1" style="font-size: 1.2em;">Industrial economics primarily studies the structure, behavior, and performance of industries and markets.</label>
+        {{ formfield player.text_answer1 }}
+        <div class="button-container">
+            <button type="button" onclick="showSolution(1)">View AI Solution</button>
+        </div>
+        <div id="ai-solution1" class="solution">
+            <p>The correct answer is: True</p>
+        </div>
+        <br>
+        <br>
+        <h3>Statement 2:</h3>
+        <form method="post">
+            <label for="question2" style="font-size: 1.2em;">Pricing is not a main focus of industrial economics.</label>
+            {{ formfield player.text_answer2 }}
+            <div class="button-container">
+                <button type="button" onclick="showSolution(2)">View AI Solution</button>
+            </div>
+            <div id="ai-solution2" class="solution">
+                <p>The correct answer is: False</p>
+            </div>
+        <br>
+        <br>
+        <h3>Statement 3:</h3>
+        <form method="post">
+            <label for="question3" style="font-size: 1.2em;">Governments implement regulations to promote competition and prevent monopolies.</label>
+            {{ formfield player.text_answer3 }}
+            <div class="button-container">
+                <button type="button" onclick="showSolution(3)">View AI Solution</button>
+            </div>
+            <div id="ai-solution3" class="solution">
+                <p>The correct answer is: True</p>
+            </div>
+        <br>
+        <br>
+        <br>
+        {{ next_button }}
+    </form>
+
+   
+
+
+
+{{ endblock }}
+
+{{ block scripts }}
+<script>
+        let aiUsageCount = 0;
+
+        function showSolution(statementNumber) {
+            document.getElementById('ai-solution' + statementNumber).style.display = 'block';
+            aiUsageCount++;
+            console.log('AI solution used ' + aiUsageCount + ' times');
+            sessionStorage.setItem('ai_used_round1', aiUsageCount);
+        }
+
+        function saveAIUsage() {
+            localStorage.setItem('aiUsageCount', aiUsageCount);
+        }
+
+        document.querySelector('form').addEventListener('submit', saveAIUsage);
+
+</script>
+{{ endblock }}

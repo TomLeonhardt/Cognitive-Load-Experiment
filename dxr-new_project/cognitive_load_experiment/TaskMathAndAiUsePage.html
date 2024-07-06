@@ -1,0 +1,108 @@
+{{ extends 'global/Page.html' }}
+{{ block title }}Task 3{{ endblock }}
+
+{{ block content }}
+
+    <style>
+        .solution {
+            display: none;
+            margin-top: 10px;
+        }
+        .button-container {
+            margin-top: 10px;
+        }
+    </style>
+
+    <h2>Economic Math Task</h2>
+    <br>
+    <p style="font-size: 1.2em; font-weight: bold; text-decoration: underline;">Task: Solve the following microeconomic math problems while remembering the 10-digit number.</p>
+    <br>
+    <p><strong>You have the option to solve this task yourself or to delegate it to an artificial intelligence (AI) that will solve the task for you.</strong></p>
+    <p><strong>Make your decision and solve the task accordingly.</strong></p>
+    <br>
+    <h3>Economic Math Problems:</h3>
+    <form method="post">
+        <label for="math1">1. A company sells 20 products at a price of 15 euros each. What is the total revenue?</label><br>
+        {{ formfield player.math1 }}
+        {{ formfield_errors 'math1' }}
+        <div class="button-container">
+            <button type="button" onclick="showSolution('math1-solution')">View AI Solution</button>
+        </div>
+        <div id="math1-solution" class="solution">
+            <p>The total revenue is 300 euros.</p>
+        </div>
+        <br>
+        <br>
+        
+        <label for="math2">2. A company's revenue is 8000 euros, and its costs are 5000 euros. What is the profit?</label><br>
+        {{ formfield player.math2 }}
+        {{ formfield_errors 'math2' }}
+        <div class="button-container">
+            <button type="button" onclick="showSolution('math2-solution')">View AI Solution</button>
+        </div>
+        <div id="math2-solution" class="solution">
+            <p>The profit is 3000 euros.</p>
+        </div>
+        <br><br>
+        
+        <label for="math3">3. The total costs are 2000 euros, and the variable costs are 1500 euros. What are the fixed costs?</label><br>
+        {{ formfield player.math3 }}
+        {{ formfield_errors 'math3' }}
+        <div class="button-container">
+            <button type="button" onclick="showSolution('math3-solution')">View AI Solution</button>
+        </div>
+        <div id="math3-solution" class="solution">
+            <p>The fixed costs are 500 euros.</p>
+        </div>
+        <br><br>
+        
+        <label for="math4">4. The price per unit is 25 euros, and a company sells 40 units. What is the total revenue?</label><br>
+        {{ formfield player.math4 }}
+        {{ formfield_errors 'math4' }}
+        <div class="button-container">
+            <button type="button" onclick="showSolution('math4-solution')">View AI Solution</button>
+        </div>
+        <div id="math4-solution" class="solution">
+            <p>The total revenue is 1000 euros.</p>
+        </div>
+        <br><br>
+        
+        <label for="math5">5. The fixed costs of a company are 1000 euros, and the variable costs are 500 euros. What are the total costs?</label><br>
+        {{ formfield player.math5 }}
+        {{ formfield_errors 'math5' }}
+        <div class="button-container">
+            <button type="button" onclick="showSolution('math5-solution')">View AI Solution</button>
+        </div>
+        <div id="math5-solution" class="solution">
+            <p>The total costs are 1500 euros.</p>
+        </div>
+        <br><br>
+        
+        {{ next_button }}
+    </form>
+
+
+
+
+
+{{ endblock }}
+
+{{ block scripts }}
+<script>
+        let aiUsageCount = 0;
+
+        function showSolution(solutionId) {
+            document.getElementById(solutionId).style.display = 'block';
+            aiUsageCount++;
+            console.log('AI solution used ' + aiUsageCount + ' times');
+            sessionStorage.setItem('ai_used_round3', aiUsageCount);
+        }
+
+        function saveAIUsage() {
+            localStorage.setItem('aiUsageCount', aiUsageCount);
+        }
+
+        document.querySelector('form').addEventListener('submit', saveAIUsage);
+
+</script>
+{{ endblock }}

@@ -1,0 +1,60 @@
+{{ extends 'global/Page.html' }}
+{{ block title }}Task 3{{ endblock }}
+
+{{ block content }}
+
+<h2>Economic Math Task - Results</h2>
+<p>Here are your results:</p>
+
+<p id="question1-result"></p>
+<p id="question2-result"></p>
+<p id="question3-result"></p>
+<p id="question4-result"></p>
+<p id="question5-result"></p>
+
+<p id="total-score" style="font-weight: bold;"></p>
+
+{{ next_button }}
+
+
+{{ endblock }}
+
+{{ block scripts }}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const correctAnswers = {
+        math1: 300,
+        math2: 3000,
+        math3: 500,
+        math4: 1000,
+        math5: 1500
+    };
+
+    const playerAnswers = {
+        math1: parseInt('{{ player.math1 }}', 10),
+        math2: parseInt('{{ player.math2 }}', 10),
+        math3: parseInt('{{ player.math3 }}', 10),
+        math4: parseInt('{{ player.math4 }}', 10),
+        math5: parseInt('{{ player.math5 }}', 10)
+    };
+
+    let score = 0;
+
+    for (let i = 1; i <= 5; i++) {
+        let questionId = `question${i}-result`;
+        let answerId = `math${i}`;
+        let correctAnswer = correctAnswers[answerId];
+        let playerAnswer = playerAnswers[answerId];
+
+        if (playerAnswer === correctAnswer) {
+            document.getElementById(questionId).innerHTML = `Question ${i}: ${playerAnswer} <span style="color: green;">(Correct)</span>`;
+            score += 1;
+        } else {
+            document.getElementById(questionId).innerHTML = `Question ${i}: ${playerAnswer} <span style="color: red;">(Incorrect)</span> - Correct answer: ${correctAnswer}`;
+        }
+    }
+
+    document.getElementById('total-score').innerHTML = `Your score is: ${score}/5`;
+});
+</script>
+{{ endblock }}
