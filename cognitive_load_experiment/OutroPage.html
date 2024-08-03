@@ -4,10 +4,10 @@
 {{ block content }}
 
 <p><strong style="font-size: 1.5em;">Thank you for participating!</strong></p>
-
+<br>
 <h2>Summary</h2>
 <p>In this experiment, we explored the concept of cognitive load, its impact on decision-making, and the difficulty of solving tasks without mistakes.</p>
-
+<br>
 <h2>What is Cognitive Load Theory?</h2>
 <p>Cognitive Load Theory explains how our cognitive resources are used when performing tasks. It includes three main components:</p>
 <ul>
@@ -16,19 +16,39 @@
   <li><strong>Germane Load:</strong> The mental effort used to process information and build knowledge.</li>
 </ul>
 <p>High cognitive load can weaken decision-making processes, leading to errors and suboptimal choices.</p>
-
+<br>
 <h2>Role of AI in Reducing Cognitive Load</h2>
 <p>AI can assist in reducing cognitive load by handling complex problems, providing recommendations, and automating routine tasks. This can help individuals make better decisions by offloading some of the cognitive burden.</p>
-<p>By honestly reporting whether you used AI, you help us understand its effectiveness in reducing cognitive load and improving performance.</p>
-<p>It allows us to analyze the true impact of AI on cognitive load and decision-making processes.</p>
-
 <br>
-
-<p>I hope this experiment has provided valuable insights into the effects of cognitive load and highlighted the potential benefits of AI assistance.</p>
-
+<h2>Feedback</h2>
+<p>Please rate your confidence on the following scales where 1 indicates "Not confident at all" and 10 indicates "Very confident".</p>
 <form method="post">
+    <p>How confident were you in doing the tasks on your own?</p>
+    <input type="range" id="confidence_own_slider" min="1" max="10" value="5" oninput="updateSliderValue('confidence_own_slider', 'confidence_own_value', 'confidence_own')" style="display: inline-block; margin-top: 10px;">
+    <output id="confidence_own_value" for="confidence_own_slider">5</output>
+    <input type="hidden" id="confidence_own" name="confidence_own" value="5">
+    <br><br>
+    <p>How confident were you in relying on the AI solutions?</p>
+    <input type="range" id="confidence_ai_slider" min="1" max="10" value="5" oninput="updateSliderValue('confidence_ai_slider', 'confidence_ai_value', 'confidence_ai')" style="display: inline-block; margin-top: 10px;">
+    <output id="confidence_ai_value" for="confidence_ai_slider">5</output>
+    <input type="hidden" id="confidence_ai" name="confidence_ai" value="5">
+    <br><br>
+    <p>I hope this experiment has provided valuable insights into the effects of cognitive load and highlighted the potential benefits of AI assistance.</p>
     <button type="submit">Finish</button>
 </form>
 
+{{ endblock }}
 
+{{ block scripts }}
+<script>
+function updateSliderValue(sliderId, outputId, hiddenInputId) {
+    var slider = document.getElementById(sliderId);
+    var output = document.getElementById(outputId);
+    var hiddenInput = document.getElementById(hiddenInputId);
+    
+    output.value = slider.value;
+    hiddenInput.value = slider.value;
+    output.style.left = `calc(${slider.value}% + (${8 - slider.value * 0.15}px))`; // adjust the position dynamically
+}
+</script>
 {{ endblock }}

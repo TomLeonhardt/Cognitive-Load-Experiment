@@ -27,6 +27,8 @@ class Player(BasePlayer):
     math3 = models.IntegerField(label=' ')
     math4 = models.IntegerField(label=' ')
     math5 = models.IntegerField(label=' ')
+    confidence_own = models.IntegerField(label='How confident were you in doing the tasks on your own?')
+    confidence_ai = models.IntegerField(label='How confident were you in relying on the AI solutions?')
 class IntroductionPage(Page):
     form_model = 'player'
 class SequencePage1(Page):
@@ -78,4 +80,5 @@ class OverallResults(Page):
     form_model = 'player'
 class OutroPage(Page):
     form_model = 'player'
+    form_fields = ['confidence_own', 'confidence_ai']
 page_sequence = [IntroductionPage, SequencePage1, TaskTextAndAiUsePage11, TaskTextAndAiUsePage111, SolutionTextTask, RecallSequencePage1, ResultPage1, NewRound, SequencePage2, TaskEcoAndAiUsePage, SolutionEcoTask, RecallSequencePage2, ResultPage2, NewRoundA, SequencePage3, TaskMathAndAiUsePage, SolutionMathTask, RecallSequencePage3, ResultPage3, OverallResults, OutroPage]
